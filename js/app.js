@@ -231,7 +231,7 @@ var alki = {
 
     for(var i = 0; i < hoursOfOperation.length; i++) {
       listElement= document.createElement('li');
-      listElement.textContent = hoursOfOperation[i] + ': ' + this.salesPerHour[i] + ' cookies';
+      listElement.textContent = hoursOfOperation[i] + ':\t' + this.salesPerHour[i] + ' cookies';
       ulElement.appendChild(listElement);
     }
     listElement = document.createElement('li');

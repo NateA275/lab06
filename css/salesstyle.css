@@ -1,0 +1,38 @@
+h1 {
+  font-size: 2em;;
+  text-align: center;
+  width: 30em;
+  margin-top: 2em;
+  border-bottom: .1em solid black;
+  margin: auto;
+}
+
+
+body {
+  width: 65em;
+  margin: auto;
+}
+
+ul {
+  text-align: center;
+  font-size: 1.5em;
+}
+
+li{
+  list-style: none;
+}
+
+p {
+  width: 10em;
+  display: inline-block;
+  border: 1px solid black;
+  padding: .2em;
+  margin: 1em;
+}
+
+
+#finalTotal {
+  text-align: center;
+  width: 30em;
+  margin: auto;
+}

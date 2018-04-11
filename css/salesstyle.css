@@ -5,34 +5,24 @@ h1 {
   margin-top: 2em;
   border-bottom: .1em solid black;
   margin: auto;
+  margin-top: 2em;
 }
 
-
-body {
-  width: 65em;
+table {
+  margin-top: 20px;
   margin: auto;
 }
 
-ul {
+th, td {
   text-align: center;
-  font-size: 1.5em;
+  padding: .5em;
+  border: 3px solid black;
 }
 
-li{
-  list-style: none;
+th {
+  font-weight: bold;
 }
 
-p {
-  width: 10em;
-  display: inline-block;
-  border: 1px solid black;
-  padding: .2em;
-  margin: 1em;
-}
-
-
-#finalTotal {
-  text-align: center;
-  width: 30em;
-  margin: auto;
+tr:nth-of-type(2n) {
+  background-color: rgba(170, 118, 131, 0.404)
 }

@@ -2,10 +2,10 @@ h1 {
   font-size: 2em;;
   text-align: center;
   width: 30em;
-  margin-top: 2em;
-  border-bottom: .1em solid black;
   margin: auto;
-  margin-top: 2em;
+  margin-top: .5em;
+  margin-bottom: .5em;
+
 }
 
 table {
@@ -24,5 +24,9 @@ th {
 }
 
 tr:nth-of-type(2n) {
-  background-color: rgba(170, 118, 131, 0.404)
+  background-color: rgb(255, 218, 227)
+}
+
+tr:hover {
+  background-color: rgb(221, 219, 125)
 }

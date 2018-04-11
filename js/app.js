@@ -1,264 +1,131 @@
 'use strict';
 
-var hoursOfOperation = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
-var dailyTotalSales = 0;
-var ulElement;
-var listElement;
+/**
+ * Variables
+ */
+var hoursOfOperation = ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00pm', '1:00pm', '2:00pm', '3:00pm', '4:00pm', '5:00pm', '6:00pm', '7:00pm']; //Array representing all active hours of operation
+var allVendors = []; //Array of all Vendor Objects
+var dailyAllCookiesSold = 0; //Accumulated value of all cookies sold per day of operations
+var salesTable = document.getElementById('salesTable'); //Location of Table in sales.html
+var newRow; //Holds new row to be appended to newTable
+var newElement; //Holds new element to be appended to newRow
+var i, j; //Holds value for iterators
 
-var firstAndPike = {
-  location: '1st and Pike',
-  minCustHour: 23,
-  maxCustHour: 65,
-  avgNumPer: 6.3,
-  custPerHour: [],
-  salesPerHour: [],
-  dailyTotal: 0,
-  storeMin: function(num) { //@param num minimum number of customers per hour
-    this.minCustHour = num;
-  },
-  storeMax: function(num) { //@param num maximum number of customers per hour
-    this.maxCustHour = num;
-  },
-  storeAvgPer: function(num) { //@param num avg number purchased per customer
-    this.avgNumPer = num;
-  },
-  getSalesPerHour: function() { //Store number customers per hour
-    for(var i = 0; i < hoursOfOperation.length; i++) {
-      this.custPerHour.push(Math.floor((Math.random() * (this.maxCustHour - this.minCustHour) + this.minCustHour)));
-    }
-  },
-  storeResultsPerHour: function() { // Store number sales per hour and calculate daily total
-    for(var i = 0; i < hoursOfOperation.length; i++) {
-      var numberSold = Math.round(this.custPerHour[i] * this.avgNumPer);
-      this.salesPerHour.push(numberSold);
-      this.dailyTotal += numberSold;
-    }
-    dailyTotalSales += this.dailyTotal;
-  },
-  renderResults: function() {
-    ulElement = document.getElementById('firstAndPike');
-    listElement = document.createElement('ul');
-    listElement.textContent = (this.location);
-    ulElement.appendChild(listElement);
+/**
+ * Object Constructor
+ * TODO find out how JS docs work
+ * @param storeLocation string name of vendor loction
+ * @param min number lower limit of range of average customers
+ * @param max number upper limit of range of average customers
+ * @param avg number average cookies bought per transaction
+ */
+function Vendor(storeLocation, min, max, avg) {
+  this.storeLocation = storeLocation;
+  this.minCustomersPerHour = min;
+  this.maxCutomersPerHour = max;
+  this.avgCookiesPerPurchase = avg;
+  this.customersPerHour = [];
+  this.cookiesSoldPerHour = [];
+  this.dailyTotal = 0;
+  allVendors.push(this);
+  this.generateCustomersPerHour();
+  this.calculateTotalSales();
+}
 
-    for(var i = 0; i < hoursOfOperation.length; i++) {
-      listElement= document.createElement('li');
-      listElement.textContent = hoursOfOperation[i] + ': ' + this.salesPerHour[i] + ' cookies';
-      ulElement.appendChild(listElement);
-    }
-    listElement = document.createElement('li');
-    listElement.textContent = 'Total: ' + this.dailyTotal + ' cookies';
-    ulElement.appendChild(listElement);
+/**
+ * Populates Random Integer Array representing number of customers per hour of operation
+ */
+Vendor.prototype.generateCustomersPerHour = function() {
+  for(i = 0; i < hoursOfOperation.length; i++) {
+    var num = Math.round(Math.random() * (this.maxCutomersPerHour - this.minCustomersPerHour) + this.minCustomersPerHour);
+    this.customersPerHour.push(num);
   }
+  console.log(this.storeLocation + ' customers generated.');
 };
 
-var seaTacAirport = {
-  location: 'SeaTac Airport',
-  minCustHour: 3,
-  maxCustHour: 24,
-  avgNumPer: 1.2,
-  custPerHour: [],
-  salesPerHour: [],
-  dailyTotal: 0,
-  storeMin: function(num) { //@param num minimum number of customers per hour
-    this.minCustHour = num;
-  },
-  storeMax: function(num) { //@param num maximum number of customers per hour
-    this.maxCustHour = num;
-  },  
-  storeAvgPer: function(num) { //@param num avg number purchased per customer
-    this.avgNumPer = num;
-  },
-  getSalesPerHour: function() { //Store number customers per hour
-    for(var i = 0; i < hoursOfOperation.length; i++) {
-      this.custPerHour.push(Math.floor((Math.random() * (this.maxCustHour - this.minCustHour) + this.minCustHour)));
-    }
-  },
-  storeResultsPerHour: function() { // Store number sales per hour and calculate daily total
-    for(var i = 0; i < hoursOfOperation.length; i++) {
-      var numberSold = Math.round(this.custPerHour[i] * this.avgNumPer);
-      this.salesPerHour.push(numberSold);
-      this.dailyTotal += numberSold;
-    }
-    dailyTotalSales += this.dailyTotal;
-  },
-  renderResults: function() {
-    ulElement = document.getElementById('seaTacAirport');
-    listElement = document.createElement('ul');
-    listElement.textContent = (this.location);
-    ulElement.appendChild(listElement);
-
-    for(var i = 0; i < hoursOfOperation.length; i++) {
-      listElement= document.createElement('li');
-      listElement.textContent = hoursOfOperation[i] + ': ' + this.salesPerHour[i] + ' cookies';
-      ulElement.appendChild(listElement);
-    }
-    listElement = document.createElement('li');
-    listElement.textContent = 'Total: ' + this.dailyTotal + ' cookies';
-    ulElement.appendChild(listElement);
+/**
+ * Populates array of integers representing number of cookies sold per hour of operation
+ * Accumulates number of cookies sold per location per day
+ * Adds number of daily cookies sold to accumulator for all locations for the day
+ */
+Vendor.prototype.calculateTotalSales = function() {
+  for(i = 0; i < hoursOfOperation.length; i++) {
+    var numberSold = Math.round(this.customersPerHour[i] * this.avgCookiesPerPurchase);
+    this.cookiesSoldPerHour.push(numberSold);
+    this.dailyTotal += numberSold;
   }
+  dailyAllCookiesSold += this.dailyTotal;
+  console.log(this.storeLocation + ' sales generated.');
 };
 
-var seattleCenter = {
-  location: 'Seattle Center',
-  minCustHour: 11,
-  maxCustHour: 38,
-  avgNumPer: 3.7,
-  custPerHour: [],
-  salesPerHour: [],
-  dailyTotal: 0,
-  storeMin: function(num) { //@param num minimum number of customers per hour
-    this.minCustHour = num;
-  },
-  storeMax: function(num) { //@param num maximum number of customers per hour
-    this.maxCustHour = num;
-  },  
-  storeAvgPer: function(num) { //@param num avg number purchased per customer
-    this.avgNumPer = num;
-  },
-  getSalesPerHour: function() { //Store number customers per hour
-    for(var i = 0; i < hoursOfOperation.length; i++) {
-      this.custPerHour.push(Math.floor((Math.random() * (this.maxCustHour - this.minCustHour) + this.minCustHour)));
-    }
-  },
-  storeResultsPerHour: function() { // Store number sales per hour and calculate daily total
-    for(var i = 0; i < hoursOfOperation.length; i++) {
-      var numberSold = Math.round(this.custPerHour[i] * this.avgNumPer);
-      this.salesPerHour.push(numberSold);
-      this.dailyTotal += numberSold;
-    }
-    dailyTotalSales += this.dailyTotal;
-  },
-  renderResults: function() {
-    ulElement = document.getElementById('seattleCenter');
-    listElement = document.createElement('ul');
-    listElement.textContent = (this.location);
-    ulElement.appendChild(listElement);
-
-    for(var i = 0; i < hoursOfOperation.length; i++) {
-      listElement= document.createElement('li');
-      listElement.textContent = hoursOfOperation[i] + ': ' + this.salesPerHour[i] + ' cookies';
-      ulElement.appendChild(listElement);
-    }
-    listElement = document.createElement('li');
-    listElement.textContent = 'Total: ' + this.dailyTotal + ' cookies';
-    ulElement.appendChild(listElement);
+/**
+ * Renders Results to sales.html site in table format
+ * TODO Put this function out of it's misery
+ */
+function renderSalesData() {
+  //RENDER HEAD
+  newRow = document.createElement('tr');
+  newElement = document.createElement('th');
+  newRow.appendChild(newElement);
+  for(i = 0; i < hoursOfOperation.length; i++) {
+    newElement = document.createElement('th');
+    newElement.textContent = hoursOfOperation[i];
+    newRow.appendChild(newElement);
   }
-};
+  newElement = document.createElement('th');
+  newElement.textContent = 'Daily  Total';
+  newRow.appendChild(newElement);
+  salesTable.appendChild(newRow);
 
-var capitolHill = {
-  location: 'Capitol Hill',
-  minCustHour: 20,
-  maxCustHour: 38,
-  avgNumPer: 3.7,
-  custPerHour: [],
-  salesPerHour: [],
-  dailyTotal: 0,
-  storeMin: function(num) { //@param num minimum number of customers per hour
-    this.minCustHour = num;
-  },
-  storeMax: function(num) { //@param num maximum number of customers per hour
-    this.maxCustHour = num;
-  },  
-  storeAvgPer: function(num) { //@param num avg number purchased per customer
-    this.avgNumPer = num;
-  },
-  getSalesPerHour: function() { //Store number customers per hour
-    for(var i = 0; i < hoursOfOperation.length; i++) {
-      this.custPerHour.push(Math.floor((Math.random() * (this.maxCustHour - this.minCustHour) + this.minCustHour)));
+  //RENDER BODY
+  for(i = 0; i < allVendors.length; i++) {
+    newRow = document.createElement('tr');
+    newElement = document.createElement('th');
+    newElement.textContent = allVendors[i].storeLocation;
+    newRow.appendChild(newElement);
+    for(j = 0; j < hoursOfOperation.length; j++) {
+      newElement = document.createElement('td');
+      newElement.textContent = allVendors[i].cookiesSoldPerHour[j];
+      newRow.appendChild(newElement);
     }
-  },
-  storeResultsPerHour: function() { // Store number sales per hour and calculate daily total
-    for(var i = 0; i < hoursOfOperation.length; i++) {
-      var numberSold = Math.round(this.custPerHour[i] * this.avgNumPer);
-      this.salesPerHour.push(numberSold);
-      this.dailyTotal += numberSold;
-    }
-    dailyTotalSales += this.dailyTotal;
-  },
-  renderResults: function() {
-    ulElement = document.getElementById('capitolHill');
-    listElement = document.createElement('ul');
-    listElement.textContent = (this.location);
-    ulElement.appendChild(listElement);
-
-    for(var i = 0; i < hoursOfOperation.length; i++) {
-      listElement= document.createElement('li');
-      listElement.textContent = hoursOfOperation[i] + ': ' + this.salesPerHour[i] + ' cookies';
-      ulElement.appendChild(listElement);
-    }
-    listElement = document.createElement('li');
-    listElement.textContent = 'Total: ' + this.dailyTotal + ' cookies';
-    ulElement.appendChild(listElement);
+    newElement = document.createElement('td');
+    newElement.textContent = allVendors[i].dailyTotal;
+    newRow.appendChild(newElement);
+    salesTable.appendChild(newRow);
   }
-};
 
-var alki = {
-  location: 'Alki',
-  minCustHour: 2,
-  maxCustHour: 16,
-  avgNumPer: 4.6,
-  custPerHour: [],
-  salesPerHour: [],
-  dailyTotal: 0,
-  storeMin: function(num) { //@param num minimum number of customers per hour
-    this.minCustHour = num;
-  },
-  storeMax: function(num) { //@param num maximum number of customers per hour
-    this.maxCustHour = num;
-  },  
-  storeAvgPer: function(num) { //@param num avg number purchased per customer
-    this.avgNumPer = num;
-  },
-  getSalesPerHour: function() { //Store number customers per hour
-    for(var i = 0; i < hoursOfOperation.length; i++) {
-      this.custPerHour.push(Math.floor((Math.random() * (this.maxCustHour - this.minCustHour) + this.minCustHour)));
-    }
-  },
-  storeResultsPerHour: function() { // Store number sales per hour and calculate daily total
-    for(var i = 0; i < hoursOfOperation.length; i++) {
-      var numberSold = Math.round(this.custPerHour[i] * this.avgNumPer);
-      this.salesPerHour.push(numberSold);
-      this.dailyTotal += numberSold;
-    }
-    dailyTotalSales += this.dailyTotal;
-  },
-  renderResults: function() {
-    ulElement = document.getElementById('alki');
-    listElement = document.createElement('ul');
-    listElement.textContent = (this.location);
-    ulElement.appendChild(listElement);
+  //RENDER FOOTER
+  newRow = document.createElement('tr');
+  newElement = document.createElement('th');
+  newElement.textContent = 'Hourly Totals';
+  newRow.appendChild(newElement);
 
-    for(var i = 0; i < hoursOfOperation.length; i++) {
-      listElement= document.createElement('li');
-      listElement.textContent = hoursOfOperation[i] + ':\t' + this.salesPerHour[i] + ' cookies';
-      ulElement.appendChild(listElement);
+  for(i = 0; i < hoursOfOperation.length; i++) {
+    var hourlyTotal = 0;
+    for(j = 0; j < allVendors.length; j++) {
+      hourlyTotal += allVendors[j].cookiesSoldPerHour[i];
     }
-    listElement = document.createElement('li');
-    listElement.textContent = 'Total: ' + this.dailyTotal + ' cookies';
-    ulElement.appendChild(listElement);
+    newElement = document.createElement('td');
+    newElement.textContent = hourlyTotal;
+    newRow.appendChild(newElement);
   }
-};
+  newElement = document.createElement('td');
+  newElement.textContent = dailyAllCookiesSold;
+  newRow.appendChild(newElement);
+  salesTable.appendChild(newRow);
+}
 
-firstAndPike.getSalesPerHour();
-firstAndPike.storeResultsPerHour();
-firstAndPike.renderResults();
-
-seaTacAirport.getSalesPerHour();
-seaTacAirport.storeResultsPerHour();
-seaTacAirport.renderResults();
-
-seattleCenter.getSalesPerHour();
-seattleCenter.storeResultsPerHour();
-seattleCenter.renderResults();
-
-capitolHill.getSalesPerHour();
-capitolHill.storeResultsPerHour();
-capitolHill.renderResults();
-
-alki.getSalesPerHour();
-alki.storeResultsPerHour();
-alki.renderResults();
-
-ulElement = document.getElementById('finalTotal');
-ulElement.textContent = ('Daily Total: ' + dailyTotalSales + ' cookies');
+/**
+ * Logic
+*/
+var firstAndPike = new Vendor('1st and Pike', 23, 65, 6.3);
+console.log(firstAndPike);
+var seaTacAirport = new Vendor('SeaTac Airport', 3, 24, 1.2);
+console.log(seaTacAirport);
+var seattleCenter = new Vendor('Seattle Center', 11, 38, 3.7);
+console.log(seattleCenter);
+var capitolHill = new Vendor('Capitol Hill', 20, 38, 2.3);
+console.log(capitolHill);
+var alki = new Vendor('Alki', 2, 16, 4.6);
+console.log(alki);
+renderSalesData();

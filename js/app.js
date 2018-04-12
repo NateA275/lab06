@@ -144,5 +144,3 @@ new Vendor('Seattle Center', 11, 38, 3.7);
 new Vendor('Capitol Hill', 20, 38, 2.3);
 new Vendor('Alki', 2, 16, 4.6);
 renderHeader();
-
-

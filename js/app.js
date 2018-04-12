@@ -13,7 +13,7 @@ var formElement = document.getElementById('addVendorForm'); //Location of all fo
 formElement.addEventListener('submit', handleNewVendor); //Form SUBMIT event listener
 
 /**
- * Object Constructor
+ * Vendor Constructor
  * @constructor
  * @param {string} storeLocation - name of vendor loction
  * @param {number} min - lower limit of range of average customers
@@ -132,6 +132,7 @@ function handleNewVendor(event) {
   var formMax = vendorElement.max.value; //Gets number from Max Cust/Hour box
   var formAvg = vendorElement.avg.value; //Gets number from Avg Qty/Purchase
   new Vendor(formName, formMin, formMax, formAvg);
+  document.getElementById('addVendorForm').reset(); //Reset input fields in form
 }
 
 /**
@@ -142,5 +143,4 @@ new Vendor('SeaTac Airport', 3, 24, 1.2);
 new Vendor('Seattle Center', 11, 38, 3.7);
 new Vendor('Capitol Hill', 20, 38, 2.3);
 new Vendor('Alki', 2, 16, 4.6);
-new Vendor('TEST', 1, 1, 2);
 renderHeader();

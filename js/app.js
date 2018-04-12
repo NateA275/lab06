@@ -1,15 +1,16 @@
 'use strict';
 
-/**
- * Variables
- */
 var hoursOfOperation = ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00pm', '1:00pm', '2:00pm', '3:00pm', '4:00pm', '5:00pm', '6:00pm', '7:00pm']; //Array representing all active hours of operation
 var allVendors = []; //Array of all Vendor Objects
 var dailyAllCookiesSold = 0; //Accumulated value of all cookies sold per day of operations
-var salesTable = document.getElementById('salesTable'); //Location of Table in sales.html
 var newRow; //Holds new row to be appended to newTable
 var newElement; //Holds new element to be appended to newRow
 var i, j; //Holds value for iterators
+var salesHead = document.getElementById('salesHead'); //Location of Header in sales.html
+var salesBody = document.getElementById('salesBody'); //Location of Body in sales.html
+var salesFoot = document.getElementById('salesFoot'); //Location of Foot in sales.html
+var formElement = document.getElementById('addVendorForm'); //Location of all form data inputs
+formElement.addEventListener('submit', handleNewVendor); //Form SUBMIT event listener
 
 /**
  * Object Constructor
@@ -17,7 +18,7 @@ var i, j; //Holds value for iterators
  * @param storeLocation string name of vendor loction
  * @param min number lower limit of range of average customers
  * @param max number upper limit of range of average customers
- * @param avg number average cookies bought per transaction
+ * @param avg number average cookies bought per
  */
 function Vendor(storeLocation, min, max, avg) {
   this.storeLocation = storeLocation;
@@ -30,6 +31,8 @@ function Vendor(storeLocation, min, max, avg) {
   allVendors.push(this);
   this.generateCustomersPerHour();
   this.calculateTotalSales();
+  this.renderRow();
+  this.renderFooter();
 }
 
 /**
@@ -37,10 +40,10 @@ function Vendor(storeLocation, min, max, avg) {
  */
 Vendor.prototype.generateCustomersPerHour = function() {
   for(i = 0; i < hoursOfOperation.length; i++) {
-    var num = Math.round(Math.random() * (this.maxCutomersPerHour - this.minCustomersPerHour) + this.minCustomersPerHour);
+    var randomNum = Math.random();
+    var num = Math.round(randomNum * (this.maxCutomersPerHour - this.minCustomersPerHour) +this.minCustomersPerHour);
     this.customersPerHour.push(num);
   }
-  console.log(this.storeLocation + ' customers generated.');
 };
 
 /**
@@ -55,51 +58,36 @@ Vendor.prototype.calculateTotalSales = function() {
     this.dailyTotal += numberSold;
   }
   dailyAllCookiesSold += this.dailyTotal;
-  console.log(this.storeLocation + ' sales generated.');
 };
 
 /**
- * Renders Results to sales.html site in table format
- * TODO Put this function out of it's misery
+ * Creates a new row and appends it to table body
  */
-function renderSalesData() {
-  //RENDER HEAD
+Vendor.prototype.renderRow = function() {
   newRow = document.createElement('tr');
   newElement = document.createElement('th');
+  newElement.textContent = this.storeLocation;
   newRow.appendChild(newElement);
   for(i = 0; i < hoursOfOperation.length; i++) {
-    newElement = document.createElement('th');
-    newElement.textContent = hoursOfOperation[i];
-    newRow.appendChild(newElement);
-  }
-  newElement = document.createElement('th');
-  newElement.textContent = 'Daily  Total';
-  newRow.appendChild(newElement);
-  salesTable.appendChild(newRow);
-
-  //RENDER BODY
-  for(i = 0; i < allVendors.length; i++) {
-    newRow = document.createElement('tr');
-    newElement = document.createElement('th');
-    newElement.textContent = allVendors[i].storeLocation;
-    newRow.appendChild(newElement);
-    for(j = 0; j < hoursOfOperation.length; j++) {
-      newElement = document.createElement('td');
-      newElement.textContent = allVendors[i].cookiesSoldPerHour[j];
-      newRow.appendChild(newElement);
-    }
     newElement = document.createElement('td');
-    newElement.textContent = allVendors[i].dailyTotal;
+    newElement.textContent = this.cookiesSoldPerHour[i];
     newRow.appendChild(newElement);
-    salesTable.appendChild(newRow);
   }
+  newElement = document.createElement('td');
+  newElement.textContent = this.dailyTotal;
+  newRow.appendChild(newElement);
+  salesBody.appendChild(newRow);
+};
 
-  //RENDER FOOTER
+/**
+ * Calculates Hourly Totals and Populates them to table footer
+ */
+Vendor.prototype.renderFooter = function() {  
+  salesFoot.innerHTML = ''; //Reset for subsequent calls
   newRow = document.createElement('tr');
   newElement = document.createElement('th');
   newElement.textContent = 'Hourly Totals';
   newRow.appendChild(newElement);
-
   for(i = 0; i < hoursOfOperation.length; i++) {
     var hourlyTotal = 0;
     for(j = 0; j < allVendors.length; j++) {
@@ -112,20 +100,49 @@ function renderSalesData() {
   newElement = document.createElement('td');
   newElement.textContent = dailyAllCookiesSold;
   newRow.appendChild(newElement);
-  salesTable.appendChild(newRow);
+  salesFoot.appendChild(newRow);
+};
+
+/**
+ * Renders header to sales.html
+ */
+function renderHeader() {
+  newRow= document.createElement('tr');
+  newElement = document.createElement('th');
+  newRow.appendChild(newElement);
+  for(i = 0; i < hoursOfOperation.length; i++) {
+    newElement = document.createElement('th');
+    newElement.textContent = hoursOfOperation[i];
+    newRow.appendChild(newElement);
+  }
+  newElement = document.createElement('th');
+  newElement.textContent = 'Daily Total';
+  newRow.appendChild(newElement);
+  salesHead.appendChild(newRow);
+}
+
+/**
+ * Event handler calls Vendor constructor with form input values
+ * @param {*} event triggered by submit button at formElement
+ */
+function handleNewVendor(event) {
+  event.preventDefault(); //Prevents Page From Refreshing
+  var vendorElement = event.target;
+  var testName = vendorElement.vendorLocation.value; //Gets value from Location text box
+  var testMin = vendorElement.min.value; //Gets number from Min Cust/Hour box
+  var testMax = vendorElement.max.value; //Gets number from Max Cust/Hour box
+  var testAvg = vendorElement.avg.value; //Gets number from Avg Qty/Purchase
+  new Vendor(testName, testMin, testMax, testAvg);
 }
 
 /**
  * Logic
-*/
-var firstAndPike = new Vendor('1st and Pike', 23, 65, 6.3);
-console.log(firstAndPike);
-var seaTacAirport = new Vendor('SeaTac Airport', 3, 24, 1.2);
-console.log(seaTacAirport);
-var seattleCenter = new Vendor('Seattle Center', 11, 38, 3.7);
-console.log(seattleCenter);
-var capitolHill = new Vendor('Capitol Hill', 20, 38, 2.3);
-console.log(capitolHill);
-var alki = new Vendor('Alki', 2, 16, 4.6);
-console.log(alki);
-renderSalesData();
+ */
+new Vendor('1st and Pike', 23, 65, 6.3);
+new Vendor('SeaTac Airport', 3, 24, 1.2);
+new Vendor('Seattle Center', 11, 38, 3.7);
+new Vendor('Capitol Hill', 20, 38, 2.3);
+new Vendor('Alki', 2, 16, 4.6);
+renderHeader();
+
+

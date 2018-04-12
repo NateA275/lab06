@@ -9,6 +9,7 @@ h1 {
 }
 
 table {
+  width: 100%;
   margin-top: 20px;
   margin: auto;
 }
@@ -29,4 +30,8 @@ tr:nth-of-type(2n) {
 
 tr:hover {
   background-color: rgb(221, 219, 125)
+}
+
+tfoot {
+  background-color: rgb(231, 230, 184)
 }

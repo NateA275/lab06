@@ -143,5 +143,4 @@ new Vendor('SeaTac Airport', 3, 24, 1.2);
 new Vendor('Seattle Center', 11, 38, 3.7);
 new Vendor('Capitol Hill', 20, 38, 2.3);
 new Vendor('Alki', 2, 16, 4.6);
-new Vendor('TEST', 1, 1, 2);
 renderHeader();

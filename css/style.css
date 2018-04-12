@@ -1,48 +1,66 @@
 * {
   color: white;
 }
-#logoText {
-  color: white;
-  width: 7em;
-  text-align: center;
-  font-size: 3em;
-  position: relative;
-  bottom: 4em;
-  left: 5em;
-  padding: .5em;
-  border: 1px solid white;
-  margin: 0;
-}
-
-#row {
-  width: 20em;
-  margin:auto;
-  font-size: 3em;
-}
-
-.col {
-  text-align: center;
-  display: inline-block;
-}
-
-#hours {
-  max-width: 15em;
-  display: block;
-}
-
 
 body {
   font-family: 'Loved by the King', cursive;
   background-image: url('../img/wood.jpg');
-  position: absolute;
-  background-repeat: no-repeat;
-  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: repeat-y;
+  background-size: 100%;
+}
+#container {
+  position: relative;
+  text-align: center;
 }
 
 #salmon {
+  width: 50%;
+  background-image: url("../img/weathered.jpg");
+  background-position: center top;
+  background-size: 100%;
   box-shadow: 20px 20px 18px -5px rgba(0,0,0,0.5);
   padding: 10px;
-  background-image: url("../img/weathered.jpg");
-  background-size: 100%;
   border: 15px solid rgb(70, 1, 1);
+  margin: auto;
+}
+
+#logoText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -30%);
+  max-width: 25%;
+  color: white;
+  text-align: center;
+  font-size: 3em;
+  padding: .5em;
+  border: 1px solid white;
+  margin: auto;
+}
+
+.row {
+  font-size: 3em;
+  text-align: center;
+  width: 100%;
+  box-shadow: 20px 20px 18px -5px rgba(0,0,0,0.5);
+  background-color: rgb(70, 1, 1);
+  padding: 1em;
+  margin:auto;
+  margin-top: 3em;
+}
+
+.col {
+  display: inline-block;
+  width: 25%;
+  vertical-align: top;
+  margin: 10px;
+}
+
+footer {
+  font-size: 1.3em;
+  line-height: 1.3em;
+  text-align: center;
+  padding: 1em;
+  margin-top: 8em;
 }

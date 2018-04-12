@@ -14,11 +14,11 @@ formElement.addEventListener('submit', handleNewVendor); //Form SUBMIT event lis
 
 /**
  * Object Constructor
- * TODO find out how JS docs work
- * @param storeLocation string name of vendor loction
- * @param min number lower limit of range of average customers
- * @param max number upper limit of range of average customers
- * @param avg number average cookies bought per
+ * @constructor
+ * @param {string} storeLocation - name of vendor loction
+ * @param {number} min - lower limit of range of average customers
+ * @param {number} max - upper limit of range of average customers
+ * @param {number} avg - average cookies bought per
  */
 function Vendor(storeLocation, min, max, avg) {
   this.storeLocation = storeLocation;

@@ -40,8 +40,7 @@ function Vendor(storeLocation, min, max, avg) {
  */
 Vendor.prototype.generateCustomersPerHour = function() {
   for(i = 0; i < hoursOfOperation.length; i++) {
-    var randomNum = Math.random();
-    var num = Math.round(randomNum * (this.maxCutomersPerHour - this.minCustomersPerHour) +this.minCustomersPerHour);
+    var num = Math.round(Math.random() * (Number(this.maxCutomersPerHour) - Number(this.minCustomersPerHour)) + Number(this.minCustomersPerHour));
     this.customersPerHour.push(num);
   }
 };
@@ -128,11 +127,11 @@ function renderHeader() {
 function handleNewVendor(event) {
   event.preventDefault(); //Prevents Page From Refreshing
   var vendorElement = event.target;
-  var testName = vendorElement.vendorLocation.value; //Gets value from Location text box
-  var testMin = vendorElement.min.value; //Gets number from Min Cust/Hour box
-  var testMax = vendorElement.max.value; //Gets number from Max Cust/Hour box
-  var testAvg = vendorElement.avg.value; //Gets number from Avg Qty/Purchase
-  new Vendor(testName, testMin, testMax, testAvg);
+  var formName = vendorElement.vendorLocation.value; //Gets value from Location text box
+  var formMin = vendorElement.min.value; //Gets number from Min Cust/Hour box
+  var formMax = vendorElement.max.value; //Gets number from Max Cust/Hour box
+  var formAvg = vendorElement.avg.value; //Gets number from Avg Qty/Purchase
+  new Vendor(formName, formMin, formMax, formAvg);
 }
 
 /**
@@ -143,4 +142,5 @@ new Vendor('SeaTac Airport', 3, 24, 1.2);
 new Vendor('Seattle Center', 11, 38, 3.7);
 new Vendor('Capitol Hill', 20, 38, 2.3);
 new Vendor('Alki', 2, 16, 4.6);
+new Vendor('TEST', 1, 1, 2);
 renderHeader();

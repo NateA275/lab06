@@ -81,7 +81,7 @@ Vendor.prototype.renderRow = function() {
 /**
  * Calculates Hourly Totals and Populates them to table footer
  */
-Vendor.prototype.renderFooter = function() {  
+Vendor.prototype.renderFooter = function() {
   salesFoot.innerHTML = ''; //Reset for subsequent calls
   newRow = document.createElement('tr');
   newElement = document.createElement('th');
@@ -132,7 +132,7 @@ function handleNewVendor(event) {
   var formMax = vendorElement.max.value; //Gets number from Max Cust/Hour box
   var formAvg = vendorElement.avg.value; //Gets number from Avg Qty/Purchase
   new Vendor(formName, formMin, formMax, formAvg);
-  document.getElementById('addVendorForm').reset(); //Reset input fields in form
+  vendorElement.reset(); //Reset input fields in form
 }
 
 /**

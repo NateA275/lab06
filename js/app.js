@@ -65,7 +65,7 @@ Vendor.prototype.calculateTotalSales = function() {
 Vendor.prototype.renderRow = function() {
   newRow = document.createElement('tr');
   newElement = document.createElement('th');
-  newElement.textContent = this.storeLocation;
+  newElement.textContent = (this.storeLocation).toUpperCase();
   newRow.appendChild(newElement);
   for(i = 0; i < hoursOfOperation.length; i++) {
     newElement = document.createElement('td');
@@ -85,7 +85,7 @@ Vendor.prototype.renderFooter = function() {
   salesFoot.innerHTML = ''; //Reset for subsequent calls
   newRow = document.createElement('tr');
   newElement = document.createElement('th');
-  newElement.textContent = 'Hourly Totals';
+  newElement.textContent = 'ON THE HOUR';
   newRow.appendChild(newElement);
   for(i = 0; i < hoursOfOperation.length; i++) {
     var hourlyTotal = 0;
@@ -115,7 +115,7 @@ function renderHeader() {
     newRow.appendChild(newElement);
   }
   newElement = document.createElement('th');
-  newElement.textContent = 'Daily Total';
+  newElement.textContent = 'ON THE DAY';
   newRow.appendChild(newElement);
   salesHead.appendChild(newRow);
 }

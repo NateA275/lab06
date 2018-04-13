@@ -1,66 +1,222 @@
 * {
-  color: white;
+  color: rgb(232, 210, 183);
 }
 
 body {
+  font-size: 30px;
   font-family: 'Loved by the King', cursive;
+  max-width: 100%;
+  min-width: 23em;
   background-image: url('../img/wood.jpg');
   background-attachment: fixed;
   background-repeat: repeat-y;
   background-size: 100%;
-}
-#container {
-  position: relative;
-  text-align: center;
+  margin: auto;
 }
 
-#salmon {
-  width: 50%;
-  background-image: url("../img/weathered.jpg");
-  background-position: center top;
-  background-size: 100%;
+header {
+  font-size: 1em;
+  height: 3em;
+  width: 100%;
+  min-width: 23em;
+  position: fixed;
+  top: 0;
+  margin-top: 0;
+  background: linear-gradient(150deg, rgba(255, 255, 255, .1), rgba(0, 0, 0, .5));
+  background-color: rgb(70, 1 , 1);
   box-shadow: 20px 20px 18px -5px rgba(0,0,0,0.5);
-  padding: 10px;
-  border: 15px solid rgb(70, 1, 1);
-  margin: auto;
+}
+
+nav {
+  font-size: 1em;
+  width: 100%;
 }
 
 #logoText {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -30%);
-  max-width: 25%;
-  color: white;
+  display: inline-block;
+  border: 4px solid rgb(54, 55, 36);
+  padding: .3em;
+  margin: .5em 0 .5em 1em;
+  box-shadow: 5px 5px 10px 2px rgba(0,0,0,0.5)
+}
+
+#homelink {
+  text-decoration: none;
+}
+
+h1:hover {
+  background-color: rgb(51, 1, 1)
+}
+
+nav ul {
+  min-width: 14em;
+  vertical-align: top;
+  line-height: 3em;
+  float: right;
+}
+
+nav li {
+  float: right;
+  padding: 0 1em 0 1em;
+}
+
+li a {
+  text-decoration: none;
+}
+li a:hover{
+  color: rgb(149, 95, 47)
+}
+
+#splashImage {
+  max-width: 25em;
+  background-image: url("../img/weathered.jpg");
+  background-size: 100%;
+  padding: .5em;
+  border: .5em solid rgb(54, 55, 36);
+  margin: auto;
+  margin-top: 4.5em;
+  margin-bottom: .75em;
+  box-shadow: 20px 20px 18px -5px rgba(0,0,0,0.5);
+}
+
+#salmon {
+  display: block;
+  margin: auto;
+  max-width: 22em;
+}
+
+blockquote {
+  max-width: 32em;
+  background: linear-gradient(150deg, rgba(255, 255, 255, .1), rgba(0, 0, 0, .5));
+  background-color: rgb(149, 95, 47);
+  padding: .5em;
+  border: .3em solid rgb(149, 95, 47);
+  margin: auto;
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+  box-shadow: 20px 20px 18px -5px rgba(0,0,0,0.5);
+}
+
+blockquote h2 {
   text-align: center;
   font-size: 3em;
-  padding: .5em;
-  border: 1px solid white;
+}
+
+blockquote p {
+  font-family: Verdana, Geneva, sans-serif;
+  max-width: 38em;
+  font-size: .6em;
+  text-align: center;
   margin: auto;
 }
 
-.row {
-  font-size: 3em;
-  text-align: center;
-  width: 100%;
+.mainBlock {
+  width: 80%;
+  min-width: 25em;
+  height: 51em;
+  background: linear-gradient(150deg, rgba(255, 255, 255, .1), rgba(0, 0, 0, .5));
+  background-color: rgb(70, 1 , 1);
   box-shadow: 20px 20px 18px -5px rgba(0,0,0,0.5);
-  background-color: rgb(70, 1, 1);
-  padding: 1em;
-  margin:auto;
+  margin: auto;
+  margin-bottom: 15em;
+}
+
+.mainBlock ul {
+  width: 100%;
+}
+
+.mainBlock li {
+  width: 25em;
+  display: block;
+  padding-top: 2em;
+  margin: auto;
+}
+
+.mainBlock li img {
+  box-shadow: 5px 5px 10px 2px rgba(0,0,0,0.5)
+}
+
+.description {
+  text-align: center;
+  vertical-align: top;
+  padding-top: 2em;
+  display: inline-block;
+  width: 14em;
+  margin: auto;
+}
+
+.description h2 {
+  border-bottom: .2em solid rgb(149, 95, 47);
+  font-size: 1.25em;
+  line-height: .5em;
+}
+
+.description p {
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: .6em;
+  padding-top: .5em;
+}
+
+#aboutUsBlock {
+  height: 20em;
+}
+
+#aboutUsBlock img {
+  display: block;
+  margin: auto;
+  padding-top: 2em;
+}
+
+#aboutUsBlock p {
+  text-align: center;
+}
+
+#salesBlock {
+  height: 20em;
+}
+
+#salesTable {
+  font-family: 'Open Sans', sans-serif;
+  background-color: rgb(25, 25, 25);
+  width: 100%;
+  font-size: .5em;
+  color: white;
+  margin: auto;
+  margin-top: 10em;
+}
+
+th, td {
+  text-align: center;
+  color: white;
+  background: linear-gradient(180deg, rgba(124, 124, 124, 0.1), rgba(0, 0, 0, 0.575));
+  border-top: 1px solid rgb(10, 10, 10);
+  border-bottom: 1px solid rgb(10, 10, 10);
+  padding: .3em 0 .3em 0;
+  line-height: 1.3em
+}
+
+tr:hover {
+  background-color: rgb(70, 70, 70)
+}
+
+#addVendorForm {
+  width: 20em;
+  background-color: rgb(232, 210, 183);
+  border: 3px solid black;
+  padding: .5em;
+  margin: auto;
   margin-top: 3em;
 }
 
-.col {
-  display: inline-block;
-  width: 25%;
-  vertical-align: top;
-  margin: 10px;
+input,label,legend {
+  font-family: 'Open Sans', sans-serif;
+  color: black;
 }
 
 footer {
-  font-size: 1.3em;
-  line-height: 1.3em;
+  font-size: .6em;
+  line-height: 1.2em;
   text-align: center;
   padding: 1em;
-  margin-top: 8em;
+  margin-top: 3em;
 }

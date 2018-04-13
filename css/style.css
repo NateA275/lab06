@@ -181,6 +181,7 @@ blockquote p {
   width: 100%;
   font-size: .5em;
   color: white;
+  border: .5em solid rgb(54, 55, 36);
   margin: auto;
   margin-top: 10em;
 }

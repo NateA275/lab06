@@ -43,6 +43,14 @@ nav {
   box-shadow: 5px 5px 10px 2px rgba(0,0,0,0.5)
 }
 
+#homelink {
+  text-decoration: none;
+}
+
+h1:hover {
+  background-color: rgb(51, 1, 1)
+}
+
 nav ul {
   min-width: 14em;
   vertical-align: top;
@@ -51,8 +59,15 @@ nav ul {
 }
 
 nav li {
-  display: inline-block;
+  float: right;
   padding: 0 1em 0 1em;
+}
+
+li a {
+  text-decoration: none;
+}
+li a:hover{
+  color: rgb(149, 95, 47)
 }
 
 #splashImage {
@@ -85,14 +100,14 @@ blockquote {
   box-shadow: 20px 20px 18px -5px rgba(0,0,0,0.5);
 }
 
-blockquote img {
-  display: inline-block;
-  max-width: 4em;
-}
-
-blockquote p {
-  max-width: 17em;
+blockquote h2 {
+  text-align: center;
   font-size: 3em;
+}
+blockquote p {
+  font-family: Verdana, Geneva, sans-serif;
+  max-width: 38em;
+  font-size: .6em;
   text-align: center;
   margin: auto;
 }
@@ -103,6 +118,7 @@ blockquote p {
   background: linear-gradient(150deg, rgba(255, 255, 255, .1), rgba(0, 0, 0, .5));
   background-color: rgb(70, 1 , 1);
   box-shadow: 20px 20px 18px -5px rgba(0,0,0,0.5);
+  margin-bottom: 15em;
 }
 
 .mainBlock ul {
@@ -110,7 +126,7 @@ blockquote p {
 }
 
 .mainBlock li {
-  width: 30em;
+  width: 25em;
   display: block;
   padding-top: 2em;
   margin: auto;
@@ -126,7 +142,7 @@ blockquote p {
   vertical-align: top;
   padding-top: 2em;
   display: inline-block;
-  width: 19em;
+  width: 14em;
   margin: auto;
 }
 
@@ -136,7 +152,9 @@ blockquote p {
   line-height: .5em;
 }
 
-.descrption p {
+.description p {
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: .6em;
   padding-top: .5em;
 }
 
@@ -165,5 +183,5 @@ footer {
   line-height: 1.2em;
   text-align: center;
   padding: 1em;
-  margin-top: 10em;
+  margin-top: 3em;
 }

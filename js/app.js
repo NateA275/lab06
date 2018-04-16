@@ -40,7 +40,7 @@ function Vendor(storeLocation, min, max, avg) {
  */
 Vendor.prototype.generateCustomersPerHour = function() {
   for(i = 0; i < hoursOfOperation.length; i++) {
-    var num = Math.round(Math.random() * (Number(this.maxCutomersPerHour) - Number(this.minCustomersPerHour)) + Number(this.minCustomersPerHour));
+    var num = Math.round(Math.random() * (this.maxCutomersPerHour - this.minCustomersPerHour) + this.minCustomersPerHour);
     this.customersPerHour.push(num);
   }
 };
@@ -128,9 +128,9 @@ function handleNewVendor(event) {
   event.preventDefault(); //Prevents Page From Refreshing
   var vendorElement = event.target;
   var formName = vendorElement.vendorLocation.value; //Gets value from Location text box
-  var formMin = vendorElement.min.value; //Gets number from Min Cust/Hour box
-  var formMax = vendorElement.max.value; //Gets number from Max Cust/Hour box
-  var formAvg = vendorElement.avg.value; //Gets number from Avg Qty/Purchase
+  var formMin = Number(vendorElement.min.value); //Gets number from Min Cust/Hour box
+  var formMax = Number(vendorElement.max.value); //Gets number from Max Cust/Hour box
+  var formAvg = Number(vendorElement.avg.value); //Gets number from Avg Qty/Purchase
   new Vendor(formName, formMin, formMax, formAvg);
   vendorElement.reset(); //Reset input fields in form
 }
